@@ -14,8 +14,10 @@
                            ngModel
                            name="producto"
                            placeholder="Nombre del Producto"
+                           minlength="3"
+                           maxlength="70"
                            required>
-                    <small class="text-muted">Debe ser de 3 letras</small>
+                    <small *ngIf="formulario.controls['producto']?.invalid && formulario.controls['producto']?.touched" class="text-muted">Debe ser de 3 letras</small>
                 </div>
             </div>
 
@@ -67,6 +69,12 @@
 
         <span>Valid</span>
         <pre>{{ formulario.valid }}</pre>
+
+        <span>Pristine</span>
+        <pre>{{ formulario.pristine }}</pre>
+
+        <span>Touched</span>
+        <pre>{{ formulario.touched }}</pre>
 
         <span>Value</span>
         <pre>{{ formulario.value | json }}</pre>
