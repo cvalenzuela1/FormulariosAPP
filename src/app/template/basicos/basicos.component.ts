@@ -9,6 +9,12 @@ import { NgForm } from '@angular/forms';
 })
 export class BasicosComponent {
 
+  initForm = {
+    producto: "",
+    precio: 0,
+    existencias: 0
+  };
+
   @ViewChild("formulario") formulario!: NgForm;
 
   constructor() { }
@@ -22,6 +28,12 @@ export class BasicosComponent {
   }
 
   guardar(): void {
-    console.log( this.formulario.value );
+    // console.log( this.formulario );
+    console.log("Posteo de información exitoso!");
+    this.formulario.resetForm({
+      producto: "",
+      precio: 0,
+      existencias: 0
+    });
   }
 }
