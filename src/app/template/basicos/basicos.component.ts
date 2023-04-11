@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -8,7 +9,19 @@ import { NgForm } from '@angular/forms';
 })
 export class BasicosComponent {
 
-  guardar( formulario: NgForm ): void {
-    console.log( formulario.value );
+  @ViewChild("formulario") formulario!: NgForm;
+
+  constructor() { }
+
+  nombreValido(): boolean {
+    return this.formulario?.controls['producto']?.invalid && this.formulario?.controls['producto']?.touched;
+  }
+
+  precioValido(): boolean {
+    return this.formulario?.controls['precio']?.invalid && this.formulario?.controls['precio']?.touched;
+  }
+
+  guardar(): void {
+    console.log( this.formulario.value );
   }
 }
