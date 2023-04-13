@@ -8,6 +8,8 @@ import { CustomMinDirective } from './directives/custom-min.directive';
 import { BasicosComponent } from './basicos/basicos.component';
 import { DinamicosComponent } from './dinamicos/dinamicos.component';
 import { SwitchesComponent } from './switches/switches.component';
+import { CustomTrimLengthDirective } from './directives/custom-trim-length.directive';
+
 
 
 @NgModule({
@@ -15,7 +17,8 @@ import { SwitchesComponent } from './switches/switches.component';
     BasicosComponent,
     DinamicosComponent,
     SwitchesComponent,
-    CustomMinDirective
+    CustomMinDirective,
+    CustomTrimLengthDirective
   ],
   imports: [
     CommonModule,
