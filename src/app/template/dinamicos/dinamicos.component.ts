@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Favorito, Persona } from '../interfaces/persona.interface';
 
 @Component({
@@ -8,38 +8,53 @@ import { Favorito, Persona } from '../interfaces/persona.interface';
   styleUrls: ['./dinamicos.component.css']
 })
 export class DinamicosComponent {
-  
-  @ViewChild("formulario") formulario!: NgForm;
 
-  nuevo_favorito: string = "";
+  public nuevo_favorito: FormControl = new FormControl('', Validators.required );
 
-  persona: Persona = {
-    nombre: "Camilo",
-    favoritos: [
-      { id: 1, nombre: "Metal Gear" },
-      { id: 2, nombre: "Death Stranding" }
-    ]
+  public myForm: FormGroup = this._fb.group({
+    name: ['', [ Validators.required, Validators.minLength(3) ]],
+    favoriteGames: this._fb.array([
+      ['Metal Gear', Validators.required ],
+      ['Death Stranding', Validators.required ]
+    ])
+  })
+
+  constructor( private _fb: FormBuilder ) { }
+
+  get favoriteGames() {
+    return this.myForm.get('favoriteGames') as FormArray;
   }
 
-  nombreValido(): boolean {
-    return this.formulario?.controls['nombre']?.invalid && this.formulario?.controls['nombre']?.touched;
-  }
+  // nombreValido(): boolean {
+  //   return this.formulario?.controls['nombre']?.invalid && this.formulario?.controls['nombre']?.touched;
+  // }
 
-  guardar(): void {
-    console.log("formulario posteado");
-  }
-
-  agregar(): void {
-    const favorito_obj: Favorito = {
-      id: (this.persona.favoritos.length + 1),
-      nombre: this.nuevo_favorito
+  onSubmit(): void {
+    if( this.myForm.invalid ) {
+      this.myForm.markAllAsTouched();
+      return;
     }
-    this.persona.favoritos.push( {...favorito_obj} );
-    this.nuevo_favorito = "";
+
+    console.log( this.myForm.value );
+    this.myForm.reset();
   }
 
-  eliminar( index: number ): void {
-    this.persona.favoritos.splice( index, 1 );
+  onAddToFavorites():void {
+
+    if ( this.nuevo_favorito.invalid ) return;
+    const newGame = this.nuevo_favorito.value;
+
+    // this.favoriteGames.push(  new FormControl( newGame, Validators.required ) );
+    this.favoriteGames.push(
+      this._fb.control( newGame, Validators.required )
+    );
+
+    this.nuevo_favorito.reset();
+
+  }
+
+  onDeleteFavorite( index:number ):void {
+    this.favoriteGames.removeAt(index);
   }
 
 
