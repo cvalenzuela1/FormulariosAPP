@@ -1,8 +1,6 @@
 <h2>Validaciones Reactivas</h2>
 <hr>
 
-
-
 <div class="row">
 
     <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
@@ -13,8 +11,8 @@
                         class="form-control"
                         formControlName="name"
                         placeholder="Nombre y apellido">
-                <span class="form-text text-danger">
-                    Debe de ser en formato de nombre y apellido
+                <span *ngIf="isValidField('name')" class="form-text text-danger">
+                    Debe de ser en formato de nombre y apellido.
                 </span>
             </div>
         </div>
@@ -26,8 +24,8 @@
                         class="form-control"
                         formControlName="email"
                         placeholder="Email del usuario">
-                <span class="form-text text-danger">
-                    Utilice un email válido
+                <span *ngIf="isValidField('email')" class="form-text text-danger">
+                    Utilice un email válido.
                 </span>
             </div>
         </div>
@@ -39,8 +37,8 @@
                         class="form-control"
                         formControlName="username"
                         placeholder="Nombre de usuario">
-                <span class="form-text text-danger">
-                    Utilice un nombre de usuario válido
+                <span *ngIf="isValidField('username')" class="form-text text-danger">
+                    Utilice un nombre de usuario válido.
                 </span>
             </div>
         </div>
@@ -52,8 +50,8 @@
                         class="form-control"
                         formControlName="password"
                         placeholder="Contraseña">
-                <span class="form-text text-danger">
-                    Utilice una contraseña válida
+                <span *ngIf="isValidField('password')" class="form-text text-danger">
+                    Utilice una contraseña válida.
                 </span>
             </div>
         </div>
@@ -65,8 +63,8 @@
                         class="form-control"
                         formControlName="password2"
                         placeholder="Confirmar contraseña">
-                <span class="form-text text-danger">
-                    Las contraseñas deben coincidir
+                <span *ngIf="isValidField('password2')" class="form-text text-danger">
+                    Las contraseñas deben coincidir.
                 </span>
             </div>
         </div>
@@ -89,16 +87,16 @@
 <h2>Form errors</h2>
 
 <h5>Nombre</h5>
-<pre>{{ myForm.value.name | json }}</pre>
+<pre>{{ myForm.controls['name'].errors  | json }}</pre>
 
 <h5>Email</h5>
-<pre>{{ myForm.value.email | json }}</pre>
+<pre>{{ myForm.controls['email'].errors  | json }}</pre>
 
 <h5>Username</h5>
-<pre>{{ myForm.value.username | json }}</pre>
+<pre>{{ myForm.controls['username'].errors | json }}</pre>
 
 <h5>Password</h5>
 <pre>{{ myForm.value.password | json }}</pre>
 
 <h5>Confirmar</h5>
-<pre>{{ myForm.value.password2 | json }}</pre>
+<pre>{{ myForm.controls['password2'].errors | json }}</pre>
